@@ -1,40 +1,25 @@
-import React from 'react';
-import './style.css';
+import React from "react";
+import {Container, Head, Titulo, BemVindo} from './styles'
 
-function App(){   
-  /* https://sujeitoprogramador.com/rn-api/?api=posts */
-  const [nutri, setNutri] = React.useState([]);
-
-  React.useEffect(() => {
-    async function LOAD_API(){
-      let url = 'https://sujeitoprogramador.com/rn-api/?api=posts';
-      const response = await fetch(url);
-      const json = await response.json();
-      setNutri(json);
-    }
-    LOAD_API();
-  }, [])
+function App() {
   return (
-    <>
-      <section className="container">
-        <header>
-          <strong>React Nutri</strong>
-        </header>
-        {nutri.map(item => {
-          return(
-            <article key={item.id} className="post"> 
-              <img src={item.capa} alt={item.titulo} className="capa"/>
-              <strong className="titulo">{item.titulo}</strong>
-              <p class="subTitulo">
-                {item.subtitulo}
-              </p>
-              <a className="acessar">Acessar</a>
-            </article>
-          )
-        })}
-      </section>       
-    </>
+    <Container>
+      <Head>
+        <Titulo>Style Components</Titulo>   
+      </Head>
+      <BemVindo cor="red">
+        Bem vindo ao sistema
+      </BemVindo>
+    </Container>
   );
 }
 
+/*
+<div className="container">
+      <header className="header">
+        <a href="" className="titulo">Projeto Styled</a>
+      </header>
+      <h1>Bem vindo ao sistema!</h1>
+    </div>
+*/
 export default App;
