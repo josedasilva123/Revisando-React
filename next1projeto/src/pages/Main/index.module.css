@@ -27,6 +27,9 @@
     border-radius: 4px;
     font-size: 17px;
 }
+.form.error input{
+    border-color: red;
+}
 .submitButton{
     background: #0D2636;
     border: 0;
@@ -38,6 +41,44 @@
     justify-content: center;
     transition: .3s;
 }
+.submitButton.loading{
+   cursor: not-allowed;
+   opacity: .25; 
+}
+.submitButton.loading svg{
+    animation: Rotate 2s linear infinite;
+}
 .submitButton:hover{
     background: #194664;
+}
+@keyframes Rotate{
+    from{
+        trasnform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+.list{
+  list-style: none;
+  margin-top: 1rem;  
+}
+.list li{
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.list li + li{
+    border-top: 1px solid rgba(0,0,0,.2);
+}
+.list li a{
+    color:#0D2636;
+    text-decoration: none;
+}
+.deleteButton{
+    background: transparent;
+    color:#0D2636;
+    border: 0;
+    padding: .5rem;
 }
