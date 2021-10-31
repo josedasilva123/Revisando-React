@@ -88,3 +88,42 @@
     margin-left: 10px;
     white-space: nowrap;
 }
+.pageActions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pageActions button{
+    outline: 0;
+    border: 0;
+    background: #222;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.pageActions button:disabled{
+    cursor: not-allowed;
+    opacity: .5;
+}
+.pageFilters{
+    margin-top: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pageFilters button{
+    background: transparent;
+    border: 1px solid #222;
+    color: #222;
+    border-radius: 4px;
+    padding: 8px 15px;
+    transition: .4s;
+}
+.pageFilters button + button{
+    margin-left: .4rem;
+}
+.pageFilters button:hover,
+.pageFilters button.ativo{
+    background: #222;
+    color: #fff;
+}

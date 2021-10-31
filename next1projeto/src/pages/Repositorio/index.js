@@ -8,6 +8,13 @@ const Repositorio = ({ match }) => {
   const [repositorio, setRepositorio] = React.useState({});
   const [issues, setIssues] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [page, setPage] = React.useState(1);
+  const [filter, setFilter] = React.useState("open");
+  const buttons = [
+    {state: "open", label: "Abertas"},
+    {state: "closed", label: "Fechadas"},
+    {state: "all", label: "Todas"},
+  ]
 
   React.useEffect(() => {
     async function load() {
@@ -31,6 +38,31 @@ const Repositorio = ({ match }) => {
     }
     load();
   }, []);
+
+  function handlePage(action){
+    setPage(action === 'back' ? page - 1 : page + 1);
+  }
+  function handleFilter(action){
+    setFilter(action)
+    setPage(1);
+  }
+
+  React.useEffect(() => {
+    async function loadIssue(){
+      const nomeRepo = decodeURIComponent(match.params.repositorio);
+      const response = await api.get(`/repos/${nomeRepo}/issues`, {
+        params: {
+          state: filter,
+          per_page: 5,
+          page: page,
+        }
+      })
+      setIssues(response.data);
+    }
+    loadIssue();
+  }, [match.params.repositorio, page, filter]);
+
+ 
   if (loading) {
     return (
         <div class={styles.loading}>
@@ -52,7 +84,18 @@ const Repositorio = ({ match }) => {
           <p>{repositorio.description}</p>
         </header>
         <div>
-            <ul class={styles.issues}>
+            <div className={styles.pageFilters}>
+              {buttons.map(button => (
+                <button 
+                className={filter === button.state ? styles.ativo : ''}
+                type="button" onClick={() => 
+                handleFilter(button.state)}
+                >
+                  {button.label}
+                </button>   
+              ))}              
+            </div>
+            <ul className={styles.issues}>
                 {issues.map(issue => (
                  <li key={String(issue.id)}>
                      <img src={issue.user.avatar_url} alt={issue.user.login} />
@@ -68,6 +111,13 @@ const Repositorio = ({ match }) => {
                  </li>   
                 ))}
             </ul>
+            <div className={styles.pageActions}>
+                <button 
+                type="button" 
+                onClick={() => handlePage('back')}
+                disabled={page < 2}>Voltar</button>         
+                <button type="button" onClick={() => handlePage('open')}>Abertos</button>       
+            </div>
         </div>
       </div>
     );
